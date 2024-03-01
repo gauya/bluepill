@@ -44,8 +44,8 @@ void timer_func(TIM_HandleTypeDef *h) {
   timer_cnt++;
 }
 
-gcavg avg();
-gtimer_int gt(TIM3,1,7000,0);
+gcavg avg();  // <-----------
+gtimer_int gt;
 
 // ADC_TEST=1 : dma, else : polling
 #define ADC_TEST  0
@@ -300,7 +300,7 @@ void setup() {
 #else
   adc.setup(ADC1,ac);
 #endif
-  gt.attach(timer_func);
+  gt.set(TIM3,1,7000,0,timer_func);
   gt.start();
 
   init_ticks(eTICK_VOL_100us);

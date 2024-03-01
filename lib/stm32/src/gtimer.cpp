@@ -190,6 +190,18 @@ gtimer_int::gtimer_int() {
 gtimer_int::gtimer_int(TIM_TypeDef *TIMx, uint32_t PSC, uint32_t ARR, uint16_t mode, void (*f)(TIM_HandleTypeDef *))
     : gtimer(TIMx, PSC, ARR, mode) {
 
+    set(TIMx, PSC, ARR, mode, f);
+    start();
+}
+
+
+gtimer_int::~gtimer_int() {
+    HAL_TIM_Base_Stop_IT(&_ht);
+}
+
+void gtimer_int::set(TIM_TypeDef *TIMx, uint32_t PSC, uint32_t ARR, uint16_t mode, void (*f)(TIM_HandleTypeDef *)) {
+    gtimer::set(TIMx, PSC, ARR, mode);
+    
     IRQn_Type irqn = (TIMx == TIM2)? TIM2_IRQn : (TIMx == TIM3)? TIM3_IRQn : (TIMx == TIM4)? TIM4_IRQn : (IRQn_Type)0;
     
     if( irqn ) {
@@ -199,12 +211,9 @@ gtimer_int::gtimer_int(TIM_TypeDef *TIMx, uint32_t PSC, uint32_t ARR, uint16_t m
 
     if(f) attach(f);
 
-//    gdebug(2,"timer start\n");
     start();
-}
-
-gtimer_int::~gtimer_int() {
-    HAL_TIM_Base_Stop_IT(&_ht);
+   
+    gdebug(2,"timer start (%d)\n",(int)irqn);
 }
 
 void gtimer_int::attach( void (*f)(TIM_HandleTypeDef *h)) {

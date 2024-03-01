@@ -57,6 +57,8 @@ public:
     gtimer_int(TIM_TypeDef *TIMx, uint32_t PSC, uint32_t ARR, uint16_t mode=0, void (*f)(TIM_HandleTypeDef *) = 0);
     ~gtimer_int();
 
+    void set(TIM_TypeDef *TIMx, uint32_t PSC, uint32_t ARR, uint16_t mode=0, void (*f)(TIM_HandleTypeDef *) = 0);
+    
     void attach( void (*fi)(TIM_HandleTypeDef*) );
     void detach();
 
