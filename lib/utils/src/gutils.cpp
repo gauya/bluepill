@@ -87,18 +87,6 @@ double last_gavg(gavg_t *a) {
 #ifdef __cplusplus
 }
 
-double gavg::put( double val ) {
-    v = ( (v * n) + val) / (n + 1);
-    if( n < cb ) n++;
-
-    return v;
-}
-
-void gavg::set(uint32_t b) {
-	cb = b;
-	if( cb < n ) n = cb;
-}
-
 /// @brief 
 /// @tparam T 
 /// @tparam N 
@@ -111,7 +99,7 @@ T gtg<T,N>::put( T val ) {
 }
 
 template<typename T,typename N>
-void gtg<T,N>::set( N b ) {
+void gtg<T,N>::width( N b ) {
 	cb = b;
 	if( cb < n ) n = cb;
 }

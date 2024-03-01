@@ -9,6 +9,7 @@
 #include "app_etc.h"
 #include <giwdg.h>
 #include <ggpio.h>
+#include <gtimer.h>
 
 const int ledPin = PC13;
 gwgpio gLED(GPIOC, (1<<13));
@@ -38,14 +39,51 @@ void test2() {
   gdebug(2,"test2 cnt = %d : elapsed %ld sec %d.%d.%d.%d]\n",c++, t,d, h,m,s);
 }
 
+int timer_cnt=0;
+void timer_func(TIM_HandleTypeDef *h) {
+  timer_cnt++;
+}
+
+gcavg avg();
+gtimer_int gt(TIM3,1,7000,0);
+
 // ADC_TEST=1 : dma, else : polling
 #define ADC_TEST  0
 
+#if 0 // blackpill
 #define VREFINT 1.21
 #define REFVOL 3.3  // typical voltage
 #define ADCMAX 4095.0
 #define V25 0.76        // Voltage at 25C
 #define AVG_SLOPE 0.0025 // 2.5mV/C
+
+#else // bluepill
+
+#define VREFINT 1.20
+#define REFVOL 3.3  // typical voltage
+#define ADCMAX 4095.0
+#define V25 1.43        // Voltage at 25C
+#define AVG_SLOPE 0.0043 // 4.3mV/C
+#endif
+
+void adc_temp_vref(uint16_t t, uint16_t v) {
+    double VrefInt = (VREFINT * ADCMAX) / v;
+    //double Vtmpsens = (VREFINT * v) / ADCMAX;
+    double Vtmpsens = REFVOL * (((double)t) / ADCMAX);
+//    double Temperature = (Vtmpsens - V25) * 0.1 / AVG_SLOPE + 25.0; // 200/.76
+    double Temperature = (V25 - Vtmpsens) * 0.1 / AVG_SLOPE + 25.0; // 200/.76
+
+    float temperature = ((float)t * 3.3f) / 4095.0f * 110.0f;
+
+    float v_measured = t * 3.3 / (float)(4095);
+    float temperature2 = (v_measured - V25) / AVG_SLOPE + 25.0f;
+    float temperature3 = (V25 - (float)v_measured) * AVG_SLOPE + 25.0f;
+
+    //t = (float)adcVal[4] * 3.3 / 0xfff; // 읽은 센서값을 전압으로 변경
+    //t = (1.43 - t) / 0.0043 + 25.0; // 슬로프오 오프셋을 계산    
+
+    gdebug(2,"t/v[ %d,%d ]  Vref = [%.2fV]      Temp = [%.2fC] [%d][%d]\n",t,v,VrefInt, Temperature, gt.cnt(),timer_cnt);
+}
 
 #if (ADC_TEST==1) 
 
@@ -68,13 +106,7 @@ void testadc() {
 
     }
     gdebug(2,"\n");
-
-    double VrefInt = (VREFINT * ADCMAX) / val[5];
-    //double Vtmpsens = (VREFINT * val[5]) / ADCMAX;
-    double Vtmpsens = REFVOL * (((double)val[4]) / ADCMAX);
-    double Temperature = (Vtmpsens - V25) * 0.1 / AVG_SLOPE + 25.0; // 200/.76
-
-    gdebug(2,"Vref = [%.2fV]      Temp = [%.2fC]\n",VrefInt, Temperature);
+    adc_temp_vref(val[5], val[6]);
     dma_completed = 0;
   } else {
     gdebug(2,"adc not completed\n");
@@ -85,7 +117,7 @@ void testadc() {
 stm32adc adc;
 //uint16_t val[6];
 void testadc() {
-  uint16_t val[6];
+  uint16_t val[20] = {0,};
   //for(int i=0;i<6;i++) val[i] = 0;
 
   adc.read(val);
@@ -95,6 +127,7 @@ void testadc() {
     gdebug(2,"%u ", (val[i] & 0xfff));
   }
   gdebug(2,"\n");
+  adc_temp_vref(val[5], val[6]);
 }
 
 #endif
@@ -250,12 +283,13 @@ void setup() {
   gLED.init();
 
   adc_channels ac[] = {
-    { ADC_CHANNEL_9, ADC_SAMPLETIME_55CYCLES_5,GPIOB, 1, }, // ADC_SAMPLETIME_56CYCLES
-    { ADC_CHANNEL_17, ADC_SAMPLETIME_55CYCLES_5,0, 0, },
+    { ADC_CHANNEL_4, ADC_SAMPLETIME_55CYCLES_5,GPIOA, 4, }, // ADC_SAMPLETIME_56CYCLES
     { ADC_CHANNEL_0, ADC_SAMPLETIME_55CYCLES_5,GPIOA, 0,},
     { ADC_CHANNEL_1, ADC_SAMPLETIME_55CYCLES_5,GPIOA, 1,},
     { ADC_CHANNEL_2, ADC_SAMPLETIME_55CYCLES_5,GPIOA, 2,},
+    { ADC_CHANNEL_3, ADC_SAMPLETIME_55CYCLES_5,GPIOA, 3,},
     { ADC_CHANNEL_TEMPSENSOR, ADC_SAMPLETIME_55CYCLES_5,0, 0, },
+    { ADC_CHANNEL_17, ADC_SAMPLETIME_55CYCLES_5,0, 0, },
     { -1,0 }
   };
 
@@ -266,6 +300,8 @@ void setup() {
 #else
   adc.setup(ADC1,ac);
 #endif
+  gt.attach(timer_func);
+  gt.start();
 
   init_ticks(eTICK_VOL_100us);
   init_pfn();

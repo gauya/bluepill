@@ -70,10 +70,10 @@ void delay_ms( uint32_t ms ) {
 	} else {
 		ms += cm;
 	}
-	clear_iwdg();
+	iwdg_clear();
 
 	while(get_mtime() < ms) {
-		clear_iwdg();
+		iwdg_clear();
 	}
 #endif
 }
@@ -90,7 +90,7 @@ void delay_us( uint32_t us ) {
 	} else {
 		us += cu;
 	}
-	while(get_utime() < us) clear_iwdg();
+	while(get_utime() < us) iwdg_clear();
 #endif
 }
 #undef U32ALLSET

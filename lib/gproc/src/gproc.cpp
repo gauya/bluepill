@@ -303,7 +303,7 @@ __attribute__((weak)) void scadule_post() {
 void scadule() {
 	__restrict_time = LOOP_RESTRICT_TIME; // ~= 20msec
 
-	init_iwdg();
+	iwdg_init();
 
 	while(1) {
 		__srun = get_utime();
@@ -315,7 +315,7 @@ void scadule() {
 		__dur = dif_u32(__srun,__erun);
 		scadule_post();
 
-		clear_iwdg();
+		iwdg_clear();
 	}
 }
 

@@ -117,7 +117,7 @@ public:
     void start();
     void stop();
 
-    int read(uint16_t *bp, uint16_t bsize);
+    int read(uint16_t *bp);
     uint16_t *read();
 
 };

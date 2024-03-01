@@ -94,18 +94,6 @@ double last_gavg(gavg_t *a);
 }
 #define DEF_GAVG_CALIBRATION 10
 
-class gavg : gavg_t {
-public:
-	gavg(int cs = DEF_GAVG_CALIBRATION);
-	virtual ~gavg();
-
-	inline double get() const { return v; }
-	double put( double val );
-	void set(uint32_t nb);
-	double operator=(double val) { return put(val); }
-	inline operator double() const { return get(); }
-};
-
 template <typename T,typename N>
 struct gavg_tt{
 	N cb,n;
@@ -122,15 +110,17 @@ protected:
 	using gavg_tt<T,N>::n;
 public:
 	gtg(N cs = DEF_GAVG_CALIBRATION);
-	virtual ~gtg();
+	~gtg(){};
 
 	inline T get() const { return this->v; }
 	T put( T val );
-	void set(N nb);
+	void width(N nb);
 	T operator=(T val) { return put(val); }
 	inline operator T() const { return get(); }
 };
-// gavg_tt<int,uint8_t> gr;
+
+typedef gtg<double,uint8_t> gcavg;
+typedef gtg<double,uint32_t> glavg;
 
 class gam {
 private:
