@@ -52,9 +52,9 @@
 // NONE GRBL 1.1f SETTINGS!:
 //************************************************************************************************************
 // Additional axis
-#define AA_AXIS // Disabled by default. Uncomment to enable.
+//#define AA_AXIS // Disabled by default. Uncomment to enable.
 // Don't use high step rate with B and C axis. Less than 80kHz recommended
-//#define AB_AXIS  // Disabled by default. Uncomment to enable.
+#define AB_AXIS  // Disabled by default. Uncomment to enable.
 // CAUTION! C axis use SWD (PA13, PA14). After first flashing you can flash controller only with
 // "under reset" option and with reset pin connected to the programmer!
 // Don't use it if not sure!
