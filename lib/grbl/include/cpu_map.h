@@ -413,7 +413,7 @@
 #define C_STEP_BIT      13
 #endif
 #if defined(AB_AXIS) || defined(ABC_AXIS)
-#define B_STEP_BIT      9
+#define B_STEP_BIT      11
 #endif
 #define X_STEP_BIT      0
 #define Y_STEP_BIT      1
@@ -438,7 +438,7 @@
 #define C_DIRECTION_BIT   14
 #endif
 #if defined(AB_AXIS) || defined(ABC_AXIS)
-#define B_DIRECTION_BIT   10
+#define B_DIRECTION_BIT   8
 #endif
 #define X_DIRECTION_BIT   4
 #define Y_DIRECTION_BIT   5
