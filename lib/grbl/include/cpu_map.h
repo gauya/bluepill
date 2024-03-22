@@ -438,7 +438,7 @@
 #define C_DIRECTION_BIT   14
 #endif
 #if defined(AB_AXIS) || defined(ABC_AXIS)
-#define B_DIRECTION_BIT   8
+#define B_DIRECTION_BIT   12
 #endif
 #define X_DIRECTION_BIT   4
 #define Y_DIRECTION_BIT   5
