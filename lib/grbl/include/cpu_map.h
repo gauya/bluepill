@@ -28,6 +28,10 @@
 #ifndef cpu_map_h
 #define cpu_map_h
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #ifdef CPU_MAP_ATMEGA328P // (Arduino Uno) Officially supported by Grbl.
 
   // Define serial port pins and interrupt vectors.
@@ -495,7 +499,6 @@
 
   // Define spindle enable and spindle direction output pins.
 #define SPINDLE_ENABLE_PORT   GPIOB
-#define RCC_SPINDLE_ENABLE_PORT RCC_APB2Periph_GPIOB
 #define SPINDLE_ENABLE_BIT    1  //
 #ifndef USE_SPINDLE_DIR_AS_ENABLE_PIN
 #define SPINDLE_DIRECTION_DDR   GPIOB
@@ -511,7 +514,6 @@
   // Define flood and mist coolant enable output pins.
   // a later date if flash and memory space allows.
 #define COOLANT_FLOOD_PORT            GPIOB
-#define RCC_COOLANT_FLOOD_PORT        RCC_APB2Periph_GPIOB
 #define COOLANT_FLOOD_BIT             4
 #define COOLANT_MIST_PORT             GPIOB
 #define RCC_COOLANT_MIST_PORT         RCC_APB2Periph_GPIOB
@@ -521,7 +523,6 @@
   // NOTE: All CONTROLs pins must be on the same port and not on a port with other input pins (limits).
 #define CONTROL_PIN_PORT              GPIOB
 #define CONTROL_PORT                  GPIOB
-#define RCC_CONTROL_PORT              RCC_APB2Periph_GPIOB
 #define GPIO_CONTROL_PORT             GPIO_PortSourceGPIOB
 #define CONTROL_RESET_BIT             5
 #define CONTROL_FEED_HOLD_BIT         6
@@ -531,7 +532,6 @@
 
   // Define probe switch input pin.
 #define PROBE_PORT                    GPIOB
-#define RCC_PROBE_PORT                RCC_APB2Periph_GPIOB
 #define PROBE_BIT                     9
 #define PROBE_MASK                    (1<<PROBE_BIT)
 
@@ -542,7 +542,6 @@
 #define SPINDLE_PWM_FREQUENCY       10000                   // KHz
 #define SPINDLE_PWM_DDR	            GPIOA
 #define SPINDLE_PWM_PORT            GPIOA
-#define RCC_SPINDLE_PWM_PORT        RCC_APB2Periph_GPIOA
 #define SPINDLE_PWM_BIT	            8
 #endif // End of VARIABLE_SPINDLE
 #define SPINDLE_PWM_MAX_VALUE       (1000000 / SPINDLE_PWM_FREQUENCY)
@@ -579,6 +578,10 @@
   // the config.h file.
 #endif
 */
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
 #pragma GCC diagnostic pop

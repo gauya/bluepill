@@ -27,6 +27,11 @@
 
 #ifndef config_h
 #define config_h
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "grbl.h" // For Arduino IDE compatibility.
 
 
@@ -695,5 +700,8 @@
 
 // Paste default settings definitions here.
 
+#ifdef __cplusplus
+}
+#endif
 
 #endif

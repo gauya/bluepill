@@ -18,73 +18,29 @@
   along with Grbl.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef grbl_h
-#define grbl_h
+#ifndef __GRBL_H
+#define __GRBL_H
 
 // Grbl versioning system
 #define GRBL_VERSION "1.1f"
 #define GRBL_VERSION_BUILD "20180715" //20170801
 #define STM32F103C8
 
-#if !defined(STM32F103C8) && !defined(WIN32)
-#define AVRTARGET
-#endif
-
-// Define standard libraries used by Grbl.
-#ifdef AVRTARGET
-#include <avr/io.h>
-#include <avr/pgmspace.h>
-#include <avr/interrupt.h>
-#include <avr/wdt.h>
-#include <util/delay.h>
-#include <inttypes.h>
-#include <stdbool.h>
-#define PORTPINDEF uint8_t
-#endif
 #include <math.h>
-#ifdef WIN32
-#include <Windows.h>
-typedef signed char  int8_t;
-typedef signed short int16_t;
-typedef signed int   int32_t;
-typedef unsigned char  uint8_t;
-typedef unsigned short uint16_t;
-typedef unsigned int   uint32_t;
-typedef signed long long   int64_t;
-typedef unsigned long long uint64_t;
-typedef int bool;
-#define false 0
-#define true 1
-#define truncf(x) (int32_t)x
-#define PSTR(x) x
-#define pgm_read_byte_near(x) *(x)
-#define _delay_ms(x) Sleep(x)
-#define M_PI 3.1415926f
-#define LOG(x,y)
-#define PORTPINDEF uint8_t
-#define printPgmString printString
-//#define NOEEPROMSUPPORT
-#endif
-#ifdef STM32F103C8
-#include "stm32f10x.h"
-#include "stm32f10x_gpio.h"
-#include "stm32f10x_exti.h"
-#include "stm32f10x_tim.h"
-#include "misc.h"
+#include <stdint.h>
+
+
 #define PSTR(x) x
 #define pgm_read_byte_near(x) *(x)
 void _delay_ms(uint32_t x);
 void _delay_us(uint32_t x);
-#define false 0
-#define true 1
+
 #define PORTPINDEF uint16_t
-typedef int bool;
 //#define NOEEPROMSUPPORT
-#define printPgmString printString
-#endif
+
+
 #include <string.h>
 #include <stdlib.h>
-#include <stdint.h>
 
 // Define the Grbl system include files. NOTE: Do not alter organization.
 #include "config.h"
@@ -95,7 +51,6 @@ typedef int bool;
 #include "cpu_map.h"
 #include "planner.h"
 #include "coolant_control.h"
-#include "eeprom.h"
 #include "gcode.h"
 #include "limits.h"
 #include "motion_control.h"
@@ -111,6 +66,8 @@ typedef int bool;
 
 // ---------------------------------------------------------------------------------------
 // COMPILE-TIME ERROR CHECKING OF DEFINE VALUES:
+
+int grblmain(void);
 
 #ifndef HOMING_CYCLE_0
   #error "Required HOMING_CYCLE_0 not defined."
@@ -169,15 +126,17 @@ typedef int bool;
     #error "Use only one of AA_AXIS, AB_AXIS, ABC_AXIS."
 #endif
 // ---------------------------------------------------------------------------------------
-
-
 // ---------------------------------------------------------------------------------------
-// COMPILE-TIME ERROR CHECKING OF DEFINE VALUES:
-
-#if defined(ABC_AXIS) && defined(STM32F103C8)
-  #warning "CAUTION!!! C AXIS USE SWD (PA13, PA14). AFTER FIRST FLASHING YOU CAN FLASH CONTROLLER ONLY WITH 'UNDER RESET' OPTION AND WITH RESET PIN CONNECTED TO THE PROGRAMMER!!! DON'T USE IT IF NOT SURE!"
+#ifdef __cplusplus
+extern "C" {
 #endif
 
-// ---------------------------------------------------------------------------------------
 
+#define printPgmString printString
+
+
+#ifdef __cplusplus
+}
 #endif
+
+#endif // __GRBL_H

@@ -24,6 +24,9 @@
 
 #include "grbl.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 // Version of the EEPROM data. Will be used to migrate existing data from older versions of Grbl
 // when firmware is upgraded. Always stored in byte 0 of eeprom
@@ -130,5 +133,9 @@ void settings_write_coord_data(uint8_t coord_select, float *coord_data);
 
 // Reads selected coordinate data from EEPROM
 uint8_t settings_read_coord_data(uint8_t coord_select, float *coord_data);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

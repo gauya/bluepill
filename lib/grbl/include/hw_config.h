@@ -17,6 +17,10 @@
 #ifndef __HW_CONFIG_H
 #define __HW_CONFIG_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /* Includes ------------------------------------------------------------------*/
 #include "usb_type.h"
 
@@ -43,6 +47,10 @@ void OnUsbDataRx(uint8_t* data_buffer, uint8_t Nb_bytes);
 void Get_SerialNum(void);
 
 /* External variables --------------------------------------------------------*/
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  /*__HW_CONFIG_H*/
 /******************* (C) COPYRIGHT 2011 STMicroelectronics *****END OF FILE****/

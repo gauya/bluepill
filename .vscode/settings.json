@@ -1,7 +1,7 @@
 {
-  "C_Cpp_Runner.cCompilerPath": "C:/Users/seu/.platformio/packages/toolchain-gccarmnoneeabi@1.70201.0/bin/arm-none-eabi-gcc.exe",
-  "C_Cpp_Runner.cppCompilerPath": "C:/Users/seu/.platformio/packages/toolchain-g++armnoneeabi@1.70201.0/bin/arm-none-eabi-gcc.exe",
-  "C_Cpp_Runner.debuggerPath": "C:/Users/seu/.platformio/packages/toolchain-gdbarmnoneeabi@1.70201.0/bin/arm-none-eabi-gcc.exe",
+  "C_Cpp_Runner.cCompilerPath": "gcc",
+  "C_Cpp_Runner.cppCompilerPath": "g++",
+  "C_Cpp_Runner.debuggerPath": "gdb",
   "C_Cpp_Runner.cStandard": "",
   "C_Cpp_Runner.cppStandard": "",
   "C_Cpp_Runner.msvcBatchPath": "",
@@ -37,22 +37,7 @@
   "C_Cpp_Runner.warningsAsError": false,
   "C_Cpp_Runner.compilerArgs": [],
   "C_Cpp_Runner.linkerArgs": [],
-  "C_Cpp_Runner.includePaths": [
-    "D:/vs/projects/stm32/bluepill_grbl/include",
-    "D:/vs/projects/stm32/bluepill_grbl/src",
-    "C:/Users/seu/.platformio/packages/framework-cmsis@2.50501.200527/CMSIS/Include",
-    "C:/Users/seu/.platformio/packages/framework-cmsis-stm32f1/Include",
-    "D:/vs/projects/stm32/bluepill_grbl/lib/grbl/include",
-    "D:/vs/projects/stm32/bluepill_grbl/lib/grbl/src",
-    "D:/vs/projects/stm32/bluepill_grbl/lib/stm32/include",
-    "D:/vs/projects/stm32/bluepill_grbl/lib/stm32/src",
-    "D:/vs/projects/stm32/bluepill_grbl/lib/stm_lib/src",
-    "D:/vs/projects/stm32/bluepill_grbl/lib/stm_usb_fs_lib/src",
-    "D:/vs/projects/stm32/bluepill_grbl/lib/usb/include",
-    "D:/vs/projects/stm32/bluepill_grbl/lib/usb/src",
-    "D:/vs/projects/stm32/bluepill_grbl/lib/util",
-    ""
-  ],
+  "C_Cpp_Runner.includePaths": [],
   "C_Cpp_Runner.includeSearch": [
     "*",
     "**/*"

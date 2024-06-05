@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"name": "STM32CubeF1",
+			"path": "C:/Users/seu/.platformio/packages/framework-stm32cubef1/Drivers/STM32CubeF1"
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"main.h": "c++"
+		}
+	}
+}

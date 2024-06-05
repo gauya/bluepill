@@ -21,8 +21,13 @@
 
 #ifndef nuts_bolts_h
 #define nuts_bolts_h
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #ifdef STM32F103C8
-#include "stm32f10x_rcc.h"
+//#include "stm32f10x_rcc.h"
 #endif
 #include "float.h"
 #define false 0
@@ -98,14 +103,14 @@ uint8_t read_float(char *line, uint8_t *char_counter, float *float_ptr);
 // Non-blocking delay function used for general operation and suspend features.
 void delay_sec(float seconds, uint8_t mode);
 
-// Delays variable-defined milliseconds. Compiler compatibility fix for _delay_ms().
-void delay_ms(uint16_t ms);
-
-
 // Computes hypotenuse, avoiding avr-gcc's bloated version and the extra error checking.
 float hypot_f(float x, float y);
 
 float convert_delta_vector_to_unit_vector(float *vector);
 float limit_value_by_axis_maximum(float *max_value, float *unit_vec);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

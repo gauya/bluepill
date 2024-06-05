@@ -22,6 +22,10 @@
 #ifndef protocol_h
 #define protocol_h
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 // Line buffer size from the serial input stream to be executed.
 // NOTE: Not a problem except for extreme cases, but the line buffer size can be too small
 // and g-code blocks can get truncated. Officially, the g-code standards support up to 256
@@ -55,5 +59,9 @@ void protocol_auto_cycle_start();
 
 // Block until all buffered steps are executed
 void protocol_buffer_synchronize();
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

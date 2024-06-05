@@ -22,6 +22,9 @@
 #ifndef limits_h
 #define limits_h
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 // Initialize the limits module
 void limits_init();
@@ -37,5 +40,9 @@ void limits_go_home(uint8_t cycle_mask);
 
 // Check for soft limit violations
 void limits_soft_check(float *target);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

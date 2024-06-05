@@ -22,6 +22,10 @@
 #ifndef stepper_h
 #define stepper_h
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #ifndef SEGMENT_BUFFER_SIZE
 #ifdef AVRTARGET
 #define SEGMENT_BUFFER_SIZE 6
@@ -63,5 +67,9 @@ float st_get_realtime_rate();
 extern const PORTPINDEF step_pin_mask[N_AXIS];
 extern const PORTPINDEF direction_pin_mask[N_AXIS];
 extern const PORTPINDEF limit_pin_mask[N_AXIS];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
